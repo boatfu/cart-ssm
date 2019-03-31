@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.dao.UserDao">
+    <insert id="addUser" parameterType="User">
+      INSERT INTO user VALUES(NULL,#{name},#{password},#{email})
+    </insert>
+    <delete id="deleteUser" parameterType="int">
+        DELETE FROM user WHERE id = #{id}
+    </delete>
+    <update id="updateUser"  parameterType="User">
+        UPDATE user SET name = #{name},password = #{password},email = #{email} WHERE id = #{id}
+    </update>
+
+    <select id="getUser" resultMap="user" parameterType="int">
+        SELECT * FROM user WHERE  id = #{id}
+    </select>
+    <select id="checkUser" resultMap="user" parameterType="String">
+        SELECT * FROM user WHERE  name = #{name}
+    </select>
+    <select id="checkUserByEmail" resultMap="user" parameterType="String">
+        SELECT * FROM user WHERE  email = #{email}
+    </select>
+    <resultMap id="user" type="User">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="email" property="email"/>
+    </resultMap>
+    <select id="list" resultMap="user">
+        SELECT * FROM user ORDER BY #{id}
+    </select>
+</mapper>

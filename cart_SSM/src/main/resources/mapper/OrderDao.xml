@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.dao.OrderDao">
+    <insert id="addOrder" parameterType="Order">
+      INSERT INTO orders VALUES(NULL,#{name},#{info},#{buy_counts},#{order_amount},#{create_time},#{order_status})
+    </insert>
+
+    <update id="updateOrder"  parameterType="Order">
+        UPDATE orders SET name = #{name},info = #{info},buy_counts = #{buy_counts},order_amount = #{order_amount},create_time = #{create_time},order_status = #{order_status} WHERE id = #{id}
+    </update>
+    <update id="updateOrderByStatus"  parameterType="Order">
+        UPDATE orders SET order_status = "success" WHERE id = #{id}
+    </update>
+    <delete id="deleteOrder" parameterType="int">
+        DELETE FROM orders WHERE id = #{id}
+    </delete>
+
+    <select id="getOrder" resultMap="order" parameterType="int">
+        SELECT * FROM orders WHERE  id = #{id}
+    </select>
+    <resultMap id="order" type="Order">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="info" property="info"/>
+        <result column="buy_counts" property="buy_counts"/>
+        <result column="order_amount" property="order_amount"/>
+        <result column="create_time" property="create_time"/>
+        <result column="order_status" property="order_status"/>
+    </resultMap>
+    <select id="checkOrderByName" parameterType="String" resultMap="order">
+        SELECT * FROM orders WHERE name = #{name}
+    </select>
+    <select id="list" resultMap="order">
+        SELECT * FROM orders ORDER BY id
+    </select>
+</mapper>

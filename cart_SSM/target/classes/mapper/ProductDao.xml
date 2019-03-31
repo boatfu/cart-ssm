@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.boat.dao.ProductDao">
+    <insert id="addProduct" parameterType="Product">
+      INSERT INTO products VALUES(NULL,#{name},#{price})
+    </insert>
+    <delete id="deleteProduct" parameterType="int">
+        DELETE FROM products WHERE id = #{id}
+    </delete>
+    <update id="updateProduct"  parameterType="Product">
+        UPDATE products SET name = #{name},price = #{price} WHERE id = #{id}
+    </update>
+
+    <select id="getProduct" resultMap="product" parameterType="int">
+        SELECT * FROM products WHERE  id = #{id}
+    </select>
+    <resultMap id="product" type="Product">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="price" property="price"/>
+
+    </resultMap>
+    <select id="list" resultMap="product">
+        SELECT * FROM products ORDER BY id
+    </select>
+</mapper>
